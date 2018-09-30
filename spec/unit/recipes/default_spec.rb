@@ -15,11 +15,25 @@ describe 'python::default' do
       runner.converge(described_recipe)
     end
 
-    it 'converges successfully' do
-      expect { chef_run }.to_not raise_error
-    end
+      it 'converges successfully' do
+        expect { chef_run }.to_not raise_error
+      end
 
-    
+      it 'should update all sources' do
+          expect(chef_run).to update_apt_update('update')
+        end
+
+      it 'should install python' do
+       expect(chef_run).to install_package("python-minimal")
+     end
+
+      it 'should install pip' do
+       expect(chef_run).to install_package("python-pip")
+     end
+
+     it "should install package libncurses5-dev" do
+       expect(chef_run).to install_package("libncurses5-dev")
+     end
 
   end
 end
